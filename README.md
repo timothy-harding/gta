@@ -1,3 +1,7 @@
+Concept of the game is derived from GTA
+
+Explore the different plots within the game which might impact your savings , your health and your grade level
+
 To fight opponents gain health at the gym.
 
 Upgrade skills by winning matches.
@@ -338,3 +342,4 @@ Process finished with exit code 0
 
 ======================================================
 
+Note : Although the nature of the concept is vast, have restricted it to limited plots for simplicity and targeted restrictions
