@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Opponent</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.company.game.domain</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Opponent (com.company.game.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Opponent</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (5/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    69%
+  </span>
+  <span class="absValue">
+    (20/ 29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.company.game.domain;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.company.game.constants.Constants;
+<i>4</i>&nbsp;import com.company.game.constants.Weapon;
+<i>5</i>&nbsp;import com.company.game.utils.DisplayUtil;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.Random;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public final class Opponent extends GameActor {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private int taskBonus;
+<i>12</i>&nbsp;
+<b class="fc"><i>13</i>&nbsp;    public Opponent(String name, int health, int taskBonus) {</b>
+<b class="fc"><i>14</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>15</i>&nbsp;        this.health = health;</b>
+<b class="fc"><i>16</i>&nbsp;        this.taskBonus = taskBonus;</b>
+<b class="fc"><i>17</i>&nbsp;    }</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public String getStatus() {
+<b class="fc"><i>20</i>&nbsp;        return &quot;Opponent HEALTH: &quot; + health;</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public void attack() {
+<b class="fc"><i>24</i>&nbsp;        if(health &gt; 0) {</b>
+<b class="fc"><i>25</i>&nbsp;            health=  health - 10;</b>
+<i>26</i>&nbsp;        }
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public void processCommand(Player player) {
+<b class="fc"><i>30</i>&nbsp;        player.attack();</b>
+<b class="fc"><i>31</i>&nbsp;        if(isAlive()) {</b>
+<b class="fc"><i>32</i>&nbsp;            System.out.printf(&quot;  %s hits %s and damages the health to (%s)\n&quot;, player.getName(), name,</b>
+<b class="fc"><i>33</i>&nbsp;                    getStatus());</b>
+<i>34</i>&nbsp;        }
+<i>35</i>&nbsp;        else {
+<b class="nc"><i>36</i>&nbsp;            upgrade(player);</b>
+<b class="nc"><i>37</i>&nbsp;            earnReward(player);</b>
+<b class="nc"><i>38</i>&nbsp;            DisplayUtil.printToConsole(&quot;  &quot; + player.getName() + &quot; has defeated &quot; + name);</b>
+<i>39</i>&nbsp;        }
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    private void earnReward(Player player) {
+<b class="nc"><i>43</i>&nbsp;        player.addCoins(Constants.WINNER_COINS);</b>
+<b class="nc"><i>44</i>&nbsp;    }</b>
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    private void upgrade(Player player) {
+<b class="nc"><i>47</i>&nbsp;        player.setGrade(player.getGrade() + taskBonus);</b>
+<b class="nc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public void display() {
+<b class="fc"><i>52</i>&nbsp;        DisplayUtil.printToConsole(&quot;######Opponent####################&quot;);</b>
+<b class="fc"><i>53</i>&nbsp;        DisplayUtil.printToConsole(&quot;Name &quot; + name);</b>
+<b class="fc"><i>54</i>&nbsp;        DisplayUtil.printToConsole(&quot;Health &quot; + health);</b>
+<b class="fc"><i>55</i>&nbsp;        if (!getWeaponList().isEmpty()) {</b>
+<b class="nc"><i>56</i>&nbsp;            DisplayUtil.printToConsole(&quot;Weapon List: &quot;);</b>
+<b class="nc"><i>57</i>&nbsp;            getWeaponList().stream().forEach(weapon -&gt; DisplayUtil.printToConsole(weapon.getName()));</b>
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;
+<b class="fc"><i>60</i>&nbsp;        DisplayUtil.printToConsole(&quot;################################&quot;);</b>
+<i>61</i>&nbsp;
+<b class="fc"><i>62</i>&nbsp;    }</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-10-30 14:34</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FightArena</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.company.game.plot.fight</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FightArena (com.company.game.plot.fight)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FightArena</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (34/ 35)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.company.game.plot.fight;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.company.game.domain.Player;
+<i>4</i>&nbsp;import com.company.game.plot.Place;
+<i>5</i>&nbsp;import com.company.game.plot.fight.operation.EnemyAttackDefendOperation;
+<i>6</i>&nbsp;import com.company.game.plot.fight.operation.PlayerAttackDefendOperation;
+<i>7</i>&nbsp;import com.company.game.plot.fight.operation.PlayerEscapelOperation;
+<i>8</i>&nbsp;import com.company.game.utils.DisplayUtil;
+<i>9</i>&nbsp;import com.company.game.utils.InputReaderUtil;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public class FightArena extends Place {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public FightArena(String description, Player player) {
+<b class="fc"><i>14</i>&nbsp;        super(description, player);</b>
+<b class="fc"><i>15</i>&nbsp;    }</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @Override
+<i>18</i>&nbsp;    public void engage() {
+<b class="fc"><i>19</i>&nbsp;        setOpponent(InputReaderUtil.chooseOpponent());</b>
+<b class="fc"><i>20</i>&nbsp;        displayGameStats();</b>
+<b class="fc"><i>21</i>&nbsp;        this.getPlayer().setQuit(false);</b>
+<b class="fc"><i>22</i>&nbsp;        simulateFight();</b>
+<b class="fc"><i>23</i>&nbsp;        while (!gameOver()) {</b>
+<b class="fc"><i>24</i>&nbsp;            if (this.getPlayer().isCritical()) {</b>
+<b class="fc"><i>25</i>&nbsp;                warnPlayer();</b>
+<b class="fc"><i>26</i>&nbsp;                String action = InputReaderUtil.getValidStringInput();</b>
+<b class="fc"><i>27</i>&nbsp;                processUserAction(action);</b>
+<b class="fc"><i>28</i>&nbsp;            } else {</b>
+<b class="fc"><i>29</i>&nbsp;                FightInvoker.invoke(new EnemyAttackDefendOperation(getPlayer(), getOpponent()));</b>
+<i>30</i>&nbsp;            }
+<b class="fc"><i>31</i>&nbsp;            if (this.getOpponent().isAlive() &amp;&amp; !this.getPlayer().isQuit()) {</b>
+<b class="fc"><i>32</i>&nbsp;                FightInvoker.invoke(new PlayerAttackDefendOperation(getPlayer(), getOpponent()));</b>
+<i>33</i>&nbsp;            }
+<i>34</i>&nbsp;        }
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    private void simulateFight() {
+<b class="fc"><i>38</i>&nbsp;        DisplayUtil.printToConsole(&quot;Fight mode on.......&quot;);</b>
+<b class="fc"><i>39</i>&nbsp;        DisplayUtil.simulateLoading();</b>
+<b class="fc"><i>40</i>&nbsp;        DisplayUtil.space();</b>
+<b class="fc"><i>41</i>&nbsp;        getPlayer().display();</b>
+<b class="fc"><i>42</i>&nbsp;    }</b>
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    private void displayGameStats() {
+<b class="fc"><i>45</i>&nbsp;        DisplayUtil.printToConsole(&quot;Battle Begins &quot; + this.getDescription());</b>
+<b class="fc"><i>46</i>&nbsp;        this.getPlayer().display();</b>
+<b class="fc"><i>47</i>&nbsp;        DisplayUtil.space();</b>
+<b class="fc"><i>48</i>&nbsp;        this.getOpponent().display();</b>
+<b class="fc"><i>49</i>&nbsp;        DisplayUtil.printToConsole(&quot;You have encountered &quot; + &quot;: &quot; + this.getOpponent().getName() + &quot;\n&quot;);</b>
+<b class="fc"><i>50</i>&nbsp;        DisplayUtil.printToConsole(&quot;Fight with &quot; + this.getOpponent().getName() + &quot; starts (&quot; + this.getPlayer().getStatus() + &quot; / &quot; + this.getOpponent().getStatus() + &quot;)&quot;);</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    private void processUserAction(String action) {
+<b class="fc"><i>54</i>&nbsp;        if (action.equalsIgnoreCase(&quot;y&quot;)) {</b>
+<b class="nc"><i>55</i>&nbsp;            FightInvoker.invoke(new PlayerEscapelOperation(getPlayer()));</b>
+<i>56</i>&nbsp;        } else {
+<b class="fc"><i>57</i>&nbsp;            FightInvoker.invoke(new EnemyAttackDefendOperation(getPlayer(), getOpponent()));</b>
+<i>58</i>&nbsp;        }
+<b class="fc"><i>59</i>&nbsp;    }</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    private void warnPlayer() {
+<b class="fc"><i>62</i>&nbsp;        DisplayUtil.printToConsole(&quot;Health is critically low. To recover drive home. Escape? (y) or (n)&quot;);</b>
+<b class="fc"><i>63</i>&nbsp;    }</b>
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    private boolean gameOver() {
+<b class="fc"><i>66</i>&nbsp;        return !this.getPlayer().isAlive() || !this.getOpponent().isAlive() || this.getPlayer().isQuit();</b>
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-10-30 14:34</div>
+</div>
+</body>
+</html>
